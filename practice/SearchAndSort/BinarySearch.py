@@ -6,11 +6,11 @@ def binary_search(lyst, num):
     while left < right:
         mid = (left + right)//2  # 中间位置下标
         if lyst[mid] == num:
-            return mid  # 找到则返回下标
+            return mid           # 找到则返回下标
         elif lyst[mid] < num:
-            left = mid + 1  # 若待查找项大于中间元素的值则查找右半部分
+            left = mid + 1       # 若待查找项大于中间元素的值则查找右半部分
         else:
-            right = mid - 1  # 若待查找项大于中间元素的值则查找左半部分
+            right = mid - 1      # 若待查找项大于中间元素的值则查找左半部分
     return None
 
 
@@ -21,11 +21,11 @@ def binary_search_r(lyst, num):
         return None
     mid = n//2
     if lyst[mid] == num:
-        return mid  # 找到则返回下标
+        return mid                                  # 找到则返回下标
     elif lyst[mid] < num:
-        return binary_search_r(lyst[mid+1:], num)  # 若待查找项大于中间元素的值则查找右半部分
+        return binary_search_r(lyst[mid+1:], num)   # 若待查找项大于中间元素的值则查找右半部分
     else:
-        return binary_search_r(lyst[:mid], num)  # 若待查找项大于中间元素的值则查找左半部分
+        return binary_search_r(lyst[:mid], num)     # 若待查找项大于中间元素的值则查找左半部分
 
 
 if __name__ == "__main__":
