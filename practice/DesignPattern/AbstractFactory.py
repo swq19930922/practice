@@ -1,37 +1,48 @@
 
 
-# 抽象工厂，产生工厂的工厂
+# 抽象工厂，生产汽车工厂的工厂
 class AbstractFactory(object):
-    def get_factory_audi(self):
-        return AudiFactory()
+    def get_factory(self, type):
+        factory_to_create = {'audi': AudiFactory,
+                             'bmw': BMWFactory}
+        self.factory = factory_to_create[type]()
+        return self.factory
 
-    def get_factory_bmw(self):
-        return BMWFactory()
+
+# 子工厂的父类，描述具体工厂的公共接口
+class IFactory(object):
+    def get_car(self, serials):
+        pass
 
 
 # 奥迪工厂
-class AudiFactory(object):
-    def get_car_a4(self):       # 获取a4型车的实例
-        return AudiA4()
-
-    def get_car_a6(self):       # 获取a6型车的实例
-        return AudiA6()
+class AudiFactory(IFactory):
+    def get_car(self, serials):
+        car_dict = {'a4': AudiA4, 'a6': AudiA6}
+        self.car = car_dict[serials]()
+        return self.car
 
 
 # 宝马工厂
-class BMWFactory(object):
-    def get_car_x3(self):       # 获取x3型车的实例
-        return BMWX3()
+class BMWFactory(IFactory):
+    def get_car(self, serials):
+        car_dict = {'x3': BMWX3, 'x6': BMWX6}
+        self.car = car_dict[serials]()
+        return self.car
 
-    def get_car_x6(self):       # 获取x6型车的实例
-        return BMWX6()
 
-
-class Audi(object):
+# 车父类
+class Car(object):
     pass
 
 
-class BMW(object):
+# 奥迪车父类
+class Audi(Car):
+    pass
+
+
+# 宝马车父类
+class BMW(Car):
     pass
 
 
@@ -62,27 +73,21 @@ class BMWX6(BMW):
 class CarStore(object):
     ''' 车店类 '''
     def __init__(self):
-        self.factory = AbstractFactory()                                # 抽象工厂实例化
+        self.factory = AbstractFactory()              # 抽象工厂实例化
 
     def query(self, type, serials):
-        # 通过用户传参对具体工厂实例化
-        factory_getting_dict = {'audi': self.factory.get_factory_audi,
-                                'bmw': self.factory.get_factory_bmw}
-        factory = factory_getting_dict[type]()
-        # 实例化具体产品
-        if type.lower() == 'audi':
-            audi_getting_dict = {'a4': factory.get_car_a4,
-                                 'a6': factory.get_car_a6}
-            car = audi_getting_dict[serials]()
-        elif type.lower() == 'bmw':
-            bmw_getting_dict = {'x3': factory.get_car_x3,
-                                'x6': factory.get_car_x6}
-            car = bmw_getting_dict[serials]()
-        return car.show()
+        try:
+            # 通过用户传参对具体工厂实例化
+            factory = self.factory.get_factory(type)
+            # 实例化具体产品
+            car = factory.get_car(serials)
+            return car.show()
+        except KeyError:
+            return 'we do not have this car!'
 
 
 if __name__ == "__main__":
     store = CarStore()
-    car_query = store.query('audi', 'a4')
+    car_query = store.query('bmw', 'x3')
     print(car_query)
 
