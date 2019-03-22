@@ -2,21 +2,28 @@
 
 # 生产汽车的工厂, 用于根据参数实例化对应的汽车类
 class Factory(object):
-    def create_car(self, car):
+    @staticmethod
+    def create_car(car):
         car_to_create = {'audi': Audi, 'bmw': BMW}
         return car_to_create[car]()
 
 
-# 奥迪汽车类
-class Audi(object):
+# 汽车父类
+class Car(object):
     def __init__(self):
-        self.price = 200000
+        self._price = 0
 
-    def get_price(self):
-        return self.price
+    def get_price(self):            # 获取价格
+        return self._price
 
-    def set_price(self,price):
-        self.price = price
+    def set_price(self, price):      # 设置价格
+        self._price = price
+
+
+# 奥迪汽车类
+class Audi(Car):
+    def __init__(self):
+        self._price = 200000
 
     def run(self):
         res = 'Audi is fast!'
@@ -24,15 +31,9 @@ class Audi(object):
 
 
 # 宝马汽车类
-class BMW(object):
+class BMW(Car):
     def __init__(self):
-        self.price = 600000
-
-    def get_price(self):
-        return self.price
-
-    def set_price(self, price):
-        self.price = price
+        self._price = 600000
 
     def run(self):
         res = 'BMW is fast than Audi！'
@@ -41,11 +42,9 @@ class BMW(object):
 
 # 车店类向工厂类传递参数实例化对应的汽车
 class CarStore(object):
-    def __init__(self):
-        self.factory = Factory()
 
     def show(self, car):
-        car_to_sell = self.factory.create_car(car)
+        car_to_sell = Factory.create_car(car)
         price = car_to_sell.get_price()
         desc1 = car_to_sell.run()
         desc2 = 'it needs %sRMB' % (price)
