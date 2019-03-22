@@ -1,8 +1,10 @@
 
-# 抽象工厂，具体工厂的父类，描述具体工厂的公共接口
+
+# 具体工厂的父类，描述具体工厂的公共接口
 class CarFactory(object):
     def create_car(self):
         pass
+
 
 # 奥迪工厂
 class AudiFactory(CarFactory):
@@ -16,16 +18,21 @@ class BMWFactory(CarFactory):
         return BMW()
 
 
-# 奥迪汽车类
-class Audi(object):
+class Car(object):
     def __init__(self):
-        self.price = 200000
+        self._price = 0
 
     def get_price(self):            # 获取价格
-        return self.price
+        return self._price
 
-    def set_price(self,price):      # 设置价格
-        self.price = price
+    def set_price(self, price):      # 设置价格
+        self._price = price
+
+
+# 奥迪汽车类
+class Audi(Car):
+    def __init__(self):
+        self._price = 200000
 
     def run(self):
         res = 'Audi is fast!'
@@ -33,15 +40,9 @@ class Audi(object):
 
 
 # 宝马汽车类
-class BMW(object):
+class BMW(Car):
     def __init__(self):
-        self.price = 600000
-
-    def get_price(self):            # 获取价格
-        return self.price
-
-    def set_price(self, price):     # 设置价格
-        self.price = price
+        self._price = 600000
 
     def run(self):
         res = 'BMW is fast than Audi！'
