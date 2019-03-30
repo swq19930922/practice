@@ -19,11 +19,11 @@ def search_range(nums, target):
     # 沿着第一次找到的目标值往左右两边找
     if lyst:
         i, j = mid, mid
-        while i > 0 and nums[i - 1] == nums[mid]:
-            lyst.append(i - 1)
+        while i > 0 and nums[i-1] == nums[mid]:
+            lyst.append(i-1)
             i -= 1
-        while j < lenth - 1 and nums[j + 1] == nums[mid]:
-            lyst.append(j + 1)
+        while j < lenth - 1 and nums[j+1] == nums[mid]:
+            lyst.append(j+1)
             j += 1
         return [i, j]
     else:
