@@ -2,7 +2,7 @@
 
 def search_range(nums, target):
     '''在有序数组中查找目标值的第一个和最后一个位置，若无返回[-1,-1]'''
-    lyst = []
+    find = False
     lenth = len(nums)
     left = 0
     right = lenth - 1
@@ -14,16 +14,14 @@ def search_range(nums, target):
         elif nums[mid] > target:
             right = mid - 1
         else:
-            lyst.append(mid)
+            find = True
             break
     # 沿着第一次找到的目标值往左右两边找
-    if lyst:
+    if find:
         i, j = mid, mid
         while i > 0 and nums[i-1] == nums[mid]:
-            lyst.append(i-1)
             i -= 1
         while j < lenth - 1 and nums[j+1] == nums[mid]:
-            lyst.append(j+1)
             j += 1
         return [i, j]
     else:
