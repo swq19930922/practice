@@ -29,6 +29,7 @@ def kth_max(lyst, start, end, k):
         return kth_max(lyst, start, index-1, k)     # k-1比索引小则需在lyst【index】左侧查找
 
 
-lyst = [1,3,5,2,4,9,8]
-res = kth_max(lyst,0,len(lyst)-1, 2)
-print(res)
+if __name__ == '__main__':
+    lyst = [1,3,5,2,4,9,8]
+    res = kth_max(lyst,0,len(lyst)-1, 2)
+    print(res)
