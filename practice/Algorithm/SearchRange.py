@@ -16,7 +16,7 @@ def search_range(nums, target):
         else:
             lyst.append(mid)
             break
-    # 沿着第一次找到的目标值往左右两边寻找
+    # 沿着第一次找到的目标值往左右两边找
     if lyst:
         i, j = mid, mid
         while i > 0 and nums[i - 1] == nums[mid]:
